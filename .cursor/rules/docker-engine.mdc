@@ -1,0 +1,51 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+# title: Docker Standards
+# applies_to: ["**/*.Dockerfile", "docker/**", "compose/**", "docker-compose*.yml", "**/*.md"]
+# audience: "Senior Solution Architect -> Junior"
+# goal: "Produce production-ready Dockerfiles & Compose with modern best practices."
+
+## Global Principles
+- Do **not** use `version:` in `docker-compose.yml` (legacy). Compose infers schema.
+- Prefer **small base images** (e.g., `python:3.x-slim`, `alpine` only when it won’t break builds).
+- Use **multi-stage builds**: build -> runtime, copy only artifacts.
+- Always create a **non-root** user; never run as root in final stage.
+- Add **HEALTHCHECK** for network services.
+- Use **BuildKit** and **cache mounts** where helpful:
+  - `--mount=type=cache,target=/root/.cache/pip` for pip
+  - `--mount=type=cache,target=/var/cache/apt` if apt needed
+- Pin critical tools to versions; allow minor base updates unless reproducibility requires digest pins.
+- Optimize layers: **install, build, test, then copy minimal runtime**.
+- Use **.dockerignore** aggressively (e.g., `.git`, venvs, caches, tests when not needed).
+- Prefer **COPY** over **ADD** unless extracting archives or remote URLs.
+
+## Compose Standards
+- One service per directory. Example: `services/<name>/Dockerfile`.
+- Use `build.context` = service folder; `target` = runtime stage when applicable.
+- Define `env_file: [.env]` or `${VAR}`; keep secrets out of Git. Use Docker/Swarm/K8s secrets in prod.
+- Add `healthcheck`, `restart: unless-stopped` (dev) or `always` (prod).
+- Add `deploy.resources.limits` and `reservations` when targeting Swarm/compat fields.
+- Use **profiles**: `dev`, `prod`, `ci`.
+- Logging: prefer `json-file` with sane caps or a central driver in prod.
+
+## Python Service Standards
+- Use **uv** or **pip-tools** (preferred) or **pip** with a locked `requirements.txt`.
+- Multi-stage: builder installs dev deps, runs tests, then copies app to slim runtime.
+- Set `PYTHONDONTWRITEBYTECODE=1`, `PYTHONUNBUFFERED=1`.
+- Expose via **gunicorn / uvicorn**; no `flask run` in prod.
+- UID/GID configurable via `BUILD_UID/BUILD_GID`.
+
+## Security & Compliance
+- Drop **CAPS**, set `USER` in final stage.
+- Minimal packages; remove build deps in runtime.
+- Define `readOnlyRootFilesystem` (K8s) or mount ephemeral writable dirs.
+- Include example **SBOM** generation (optional) via Make target.
+
+## Example Prompts for Cursor
+- “Create a multi-stage Dockerfile for a Python FastAPI service using `python:3.12-slim`, uvicorn, non-root, healthcheck, and cache mounts.”
+- “Extend the base Compose to add a Redis cache with a healthcheck and resource limits using the `dev` profile.”
+
