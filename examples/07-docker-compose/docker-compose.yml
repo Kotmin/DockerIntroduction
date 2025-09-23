@@ -1,5 +1,4 @@
-# Docker Compose v3.8 - Modern version
-version: '3.8'
+# Docker Compose - Modern version (no version needed)
 
 services:
   # FastAPI application

@@ -1,5 +1,4 @@
-# Docker Compose v2.4 - Legacy version for comparison
-version: '2.4'
+# Docker Compose - Legacy version for comparison (shows old format)
 
 services:
   # FastAPI application
