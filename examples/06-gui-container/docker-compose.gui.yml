@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  gimp:
+    build:
+      context: .
+      dockerfile: Dockerfile.gimp
+    ports:
+      - "5900:5900"
+    volumes:
+      - gimp_data:/home/guiuser
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=:0
+    restart: unless-stopped
+    # Enable GUI access
+    privileged: true
+
+  doom:
+    build:
+      context: .
+      dockerfile: Dockerfile.doom
+    ports:
+      - "5901:5900"
+    volumes:
+      - doom_data:/home/guiuser
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=:0
+    restart: unless-stopped
+    # Enable GUI access
+    privileged: true
+
+volumes:
+  gimp_data:
+    driver: local
+  doom_data:
+    driver: local
