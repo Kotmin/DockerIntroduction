@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   dev-fastapi:
     build:
@@ -11,9 +9,10 @@ services:
       # Bind mount for hot reload - changes in host are reflected in container
       - ./app.py:/app/app.py:ro
       # Optional: mount entire directory for development
-      # - .:/app
+      - .:/app
     environment:
       - ENVIRONMENT=development
+      # - DEBUG=1
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
