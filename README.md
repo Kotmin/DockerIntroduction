@@ -2,6 +2,33 @@
 
 A comprehensive Docker tutorial designed for junior developers, created by a Senior Solution Architect. This tutorial covers essential Docker concepts with working examples and best practices.
 
+## QuickInstall Docker
+
+```bash
+sudo apt update -y
+sudo apt upgrade -y
+
+sudo apt install -y git
+sudo apt install -y curl
+
+curl -fsSL https://get.docker.com | sh
+sudo systemctl enable --now docker
+
+docker --version
+sudo usermod -aG docker $USER
+newgrp docker
+
+```
+
+## QuickInstall docker compose (only when Docker is installed)
+```bash
+## DOCKER COMPOSE
+sudo curl -SL "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+sudo systemctl restart docker
+```
+
 ## 🎯 Tutorial Overview
 
 This tutorial provides hands-on examples for learning Docker from basics to advanced concepts. Each example includes working code, comprehensive documentation, and step-by-step instructions.
