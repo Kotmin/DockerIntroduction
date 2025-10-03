@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  volumes-memory:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      # Bind mounts - host directories
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./backups:/app/backups
+      # Named volumes - managed by Docker
+      - app_cache:/app/cache
+      - app_temp:/app/temp
+    environment:
+      - ENVIRONMENT=production
+      - MEMORY_LIMIT=512m
+      - CPU_LIMIT=0.5
+    restart: unless-stopped
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.25'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  app_cache:
+    driver: local
+  app_temp:
+    driver: local

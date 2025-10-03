@@ -1,0 +1,35 @@
+# Docker Compose - Multi-stage build comparison
+
+services:
+  # Single-stage build (for comparison)
+  single-stage:
+    build:
+      context: .
+      dockerfile: Dockerfile.single-stage
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=production
+    restart: unless-stopped
+
+  # Multi-stage build (optimized)
+  multi-stage:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8000"
+    environment:
+      - ENVIRONMENT=production
+    restart: unless-stopped
+
+  # Advanced multi-stage build
+  advanced:
+    build:
+      context: .
+      dockerfile: Dockerfile.advanced
+    ports:
+      - "8002:8000"
+    environment:
+      - ENVIRONMENT=production
+    restart: unless-stopped

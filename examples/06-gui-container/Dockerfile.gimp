@@ -1,0 +1,51 @@
+# GIMP GUI Container
+FROM ubuntu:22.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive \
+    DISPLAY=:0
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gimp \
+    x11vnc \
+    xvfb \
+    xfce4 \
+    xfce4-goodies \
+    firefox \
+    curl \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN groupadd -r guiuser && useradd -r -g guiuser -m guiuser
+
+# Set working directory
+WORKDIR /home/guiuser
+
+# Create startup script
+RUN echo '#!/bin/bash\n\
+# Start Xvfb (virtual display)\n\
+Xvfb :0 -screen 0 1024x768x24 &\n\
+\n\
+# Start VNC server\n\
+x11vnc -display :0 -nopw -listen localhost -xkb &\n\
+\n\
+# Start desktop environment\n\
+startxfce4 &\n\
+\n\
+# Keep container running\n\
+tail -f /dev/null' > /home/guiuser/start-gui.sh \
+    && chmod +x /home/guiuser/start-gui.sh
+
+# Change ownership
+RUN chown -R guiuser:guiuser /home/guiuser
+
+# Switch to non-root user
+USER guiuser
+
+# Expose VNC port
+EXPOSE 5900
+
+# Run the GUI
+CMD ["/home/guiuser/start-gui.sh"]

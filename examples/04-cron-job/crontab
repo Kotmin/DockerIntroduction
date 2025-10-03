@@ -1,0 +1,19 @@
+# Cron jobs for Docker container
+# Format: minute hour day month dayofweek command
+
+# Run health check every 5 minutes
+*/5 * * * * /usr/local/bin/python3 /app/cron-script.py
+
+# Run cleanup every hour
+0 * * * * CRON_JOB_TYPE=cleanup /usr/local/bin/python3 /app/cron-script.py
+
+# Generate report every day at 2 AM
+0 2 * * * CRON_JOB_TYPE=report /usr/local/bin/python3 /app/cron-script.py
+
+# Run backup every day at 3 AM
+0 3 * * * CRON_JOB_TYPE=backup /usr/local/bin/python3 /app/cron-script.py
+
+# Run all tasks every Sunday at 4 AM
+0 4 * * 0 CRON_JOB_TYPE=all /usr/local/bin/python3 /app/cron-script.py
+
+# Empty line at the end (required by cron)
