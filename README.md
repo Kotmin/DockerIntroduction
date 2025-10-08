@@ -33,6 +33,9 @@ sudo systemctl restart docker
 
 This tutorial provides hands-on examples for learning Docker from basics to advanced concepts. Each example includes working code, comprehensive documentation, and step-by-step instructions.
 
+[YouTube Video (in Polish)](https://youtu.be/wb1S3kHMIhw)
+
+
 ## 📚 Tutorial Structure
 
 ### 1. [Simple Container](examples/01-simple-container/)
@@ -245,6 +248,53 @@ docker stats
 - [Docker Tutorial](https://docs.docker.com/get-started/)
 - [Container Security](https://docs.docker.com/engine/security/)
 - [Docker Networking](https://docs.docker.com/network/)
+
+## Sources (copy from YT video):
+🔗 Linkografia i źródła:
+// Repozytorium kod, przykłady
+https://github.com/Kotmin/DockerIntroduction
+
+// Mem z komputerem
+https://www.reddit.com/r/ProgrammerHumor/comments/10zhqlt/this_never_gets_old/
+
+// StackOverflow Survey 2024 narzędzia:
+https://survey.stackoverflow.co/2024/technology#most-popular-technologies-tools-tech-learn
+
+// Kontener vs pełna wirtualizacja
+https://www.atlassian.com/microservices/cloud-computing/containers-vs-vms
+
+https://www.docker.com/resources/what-container/
+
+https://www.redhat.com/en/topics/containers/containers-vs-vms
+
+https://aws.amazon.com/compare/the-difference-between-containers-and-virtual-machines/
+
+// Prod ready Docker:
+https://www.youtube.com/watch?v=F-9KWQByeU0
+
+// Jedyny potrzebny filmik
+https://youtu.be/DQdB7wFEygo?si=0v0zNxks9e-oZlFt
+
+// Jedyny potrzebny filmik 2
+https://youtu.be/0H2miBK_gAk?si=CnajwVS7zAcLHcfe
+
+// logging docker log
+https://docs.docker.com/engine/logging/configure/
+
+// volumes
+https://docs.docker.com/engine/storage/volumes/
+
+// problem miejsca - docker purge
+https://forums.docker.com/t/docker-no-space-left-on-device/69205/3
+
+// Network Chuck networks
+https://youtu.be/bKFMS5C4CG0?si=3qf_bXoxjspQNnRu
+
+// Docs: network
+https://docs.docker.com/engine/network/drivers/
+
+// Zasady korzystania z dockerhub
+https://docs.docker.com/docker-hub/usage/pulls/
 
 ## 🤝 Contributing
 
